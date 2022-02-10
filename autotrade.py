@@ -2,8 +2,8 @@ import time
 import pyupbit
 import datetime
 
-access = "68IVeww8qBoSirADcbEdqeh9EE5Z4MxJidj417kH"
-secret = "iuMe9x61TQ1Tx005FXQB2tikEulJEEgU0FL53x7m"
+access = "J25evJUyqcLFUfpoN60Ex9SLFBkVCxPfvXmFeule"
+secret = "vw8xdscPGx5P2gaI0aXpLoSIPT6BSR1jAj4mx5pz"
 
 def get_buy_target_price(ticker, k):
     #ticker = 코인명 k = 변동폭
