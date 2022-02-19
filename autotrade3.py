@@ -5,12 +5,13 @@ import datetime
 access = "xtPzmE2vQyjV5cwwrHOqK5w8YBeTy6Mpeigv99Os"
 secret = "5y8aU8j5P5YqbBYP6WLFURcSQJr6yNSCeolQwujs"
 
-def get_buy_target_price(ticker, k): # ticker 코인 10분 데이터를 200개 불러옴
+def get_buy_target_price(ticker, k):
+    df = pyupbit.get_ohlcv(ticker, interval="minute10", count=6)
     buy_target_price = df.iloc[0]['close'] - (df.iloc[0]['high'] - df.iloc[0]['low']) * k
     return buy_target_price
 
 def get_sell_target_price(ticker, j):
-df = pyupbit.get_ohlcv(ticker, interval="minute10", count=20)
+    df = pyupbit.get_ohlcv(ticker, interval="minute10", count=2)
     sell_target_price = df.iloc[0]['close'] + (df.iloc[0]['high'] - df.iloc[0]['low']) * j
     return sell_target_price
 
@@ -31,7 +32,7 @@ def get_balance(ticker):
      return 0
 
 def get_current_price(ticker):
-return pyupbit.get_orderbook(ticker=ticker)["orderbook_units"][0]["ask_price"]
+   return pyupbit.get_orderbook(ticker=ticker)["orderbook_units"][0]["ask_price"]
 
 upbit = pyupbit.Upbit(access, secret)
 print("autotrade start")
@@ -39,7 +40,7 @@ print("autotrade start")
 while True:
 try:
    k = 0.02
-   j = 0.10
+   j = 0.05
 
     buy_target_price = get_buy_target_price("KRW-SAND", k)
     sell_target_price = get_sell_target_price("KRW-SAND", j)
@@ -48,10 +49,10 @@ try:
       krw = get_balance("KRW")
       if krw > 5000:
        upbit.buy_market_order("KRW-SAND", krw*0.9995)
-      else:
-       if sell_target_price > current_price:
+       buy_target_price = y;
+     else:
+       if sell_target_price > current_price > y:
         sand = get_balance("SAND")
-       if sand > 0.8:
         upbit.sell_market_order("KRW-SAND", sand*0.9995)
       time.sleep(1)
 
